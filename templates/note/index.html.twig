@@ -1,0 +1,42 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Notes List{% endblock %}
+
+{% block body %}
+{% for message in app.flashes('message') %}
+    <div class='alert alert-success'>
+        {{message}}
+    </div>
+{% endfor %}
+<div style="margin-top: 20px;">
+    <h3>Notes</h3>
+</div>
+<table class="table">
+  <thead  class="thead-dark">
+    <tr>
+      <th scope="col">No</th>
+      <th scope="col">Title</th>
+      <th scope="col">Detail</th>
+      <th scope="col">Created At</th>
+      <th scope="col">Actions</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for note in notes %}
+    <tr>
+      <th scope="row">{{loop.index}}</th>
+      <td >{{note.title}}</td>
+      <td>{{note.detail}}</td>
+      <td>{{note.createdAt|date('l jS \of F Y h:i:s A')}}</td>
+      <td>
+          <a href="{{path('update_note', {id: note.id})}}" class="btn btn-success">Edit</a>
+          <a href="{{path('delete_note', {id: note.id})}}" class="btn btn-danger">Delete</a>
+      </td>
+    </tr>     
+    {% endfor %}
+  </tbody>
+</table>  
+<div class="d-flex justify-content-center align-items-center center-container" style="margin-top: 100px;">
+    <a href="create_note" class='btn btn-primary'>Add note</a>  
+</div>
+{% endblock %}
